@@ -63,14 +63,6 @@
                             class="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-red-50 hover:text-red-600 transition text-sm">
                             <i class="fas fa-user-circle w-4"></i> My Profile
                         </a>
-                        <a href="{{ route('user.profile') }}?tab=orders"
-                            class="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-red-50 hover:text-red-600 transition text-sm">
-                            <i class="fas fa-receipt w-4"></i> My Orders
-                        </a>
-                        <a href="{{ route('user.profile') }}?tab=reservations"
-                            class="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-red-50 hover:text-red-600 transition text-sm">
-                            <i class="fas fa-calendar-alt w-4"></i> My Reservations
-                        </a>
                         <div class="border-t border-gray-100">
                             <form action="{{ route('logout') }}" method="POST">
                                 @csrf
