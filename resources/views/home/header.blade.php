@@ -13,7 +13,7 @@
             </div>
 
             <!-- Desktop Menu -->
-            <div class="hidden md:flex md:items-center md:space-x-8">
+            <div class="hidden lg:flex lg:items-center lg:space-x-8">
                 <a href="#home" class="text-slate-600 hover:text-red-600 font-medium transition duration-200">Home</a>
                 <a href="#about" class="text-slate-600 hover:text-red-600 font-medium transition duration-200">About</a>
                 <a href="#gallary"
@@ -31,7 +31,7 @@
             </div>
 
             <!-- Auth/Cart Buttons -->
-            <div class="hidden md:flex items-center space-x-4">
+            <div class="hidden lg:flex items-center space-x-4">
                 @if (Route::has('login'))
                 @auth
                 <a href="{{ url('my_cart') }}"
@@ -61,7 +61,7 @@
             </div>
 
             <!-- Mobile menu button -->
-            <div class="flex items-center md:hidden">
+            <div class="flex items-center lg:hidden">
                 <button @click="open = !open" type="button"
                     class="text-slate-600 hover:text-red-600 focus:outline-none">
                     <i class="fas fa-bars text-2xl"></i>
@@ -72,7 +72,7 @@
 
     <!-- Mobile Menu -->
     <div x-show="open" @click.away="open = false"
-        class="md:hidden bg-white shadow-xl absolute w-full left-0 border-t border-gray-100" style="display: none;">
+        class="lg:hidden bg-white shadow-xl absolute w-full left-0 border-t border-gray-100" style="display: none;">
         <div class="px-4 pt-2 pb-4 space-y-1">
             <a href="#home"
                 class="block px-3 py-2 text-slate-700 font-medium hover:bg-red-50 hover:text-red-600 rounded-md">Home</a>
