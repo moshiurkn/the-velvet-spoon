@@ -42,6 +42,10 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/delivered/{id}', [AdminController::class , 'delivered'])->name('delivered');
     Route::get('/canceled/{id}', [AdminController::class , 'canceled'])->name('canceled');
     Route::get('/reservations', [AdminController::class , 'reservations'])->name('reservations');
+
+    // User Management
+    Route::get('/users', [AdminController::class , 'users'])->name('users');
+    Route::get('/delete_user/{id}', [AdminController::class , 'delete_user'])->name('delete_user');
 });
 
 

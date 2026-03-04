@@ -20,7 +20,7 @@ class AdminController extends Controller
     {
         return view('admin.add_food');
     }
-    
+
     public function logout()
     {
         Auth::logout();
@@ -33,7 +33,7 @@ class AdminController extends Controller
         $data->titile = $request->titile;
         $data->detail = $request->detail;
         $data->price = $request->price;
-       
+
         $image = $request->image;
         $filename = time() . '.' . $image->getClientOriginalExtension();
 
@@ -45,7 +45,7 @@ class AdminController extends Controller
 
 
         $data->save();
-        
+
         return redirect()->back()->with('message', 'Food Added Successfully');
     }
 
@@ -74,17 +74,17 @@ class AdminController extends Controller
         $data->price = $request->price;
 
         $image = $request->image;
-        
+
         $data->save();
-        return redirect()->back()->with('message', 'Food Updated Successfully');    
-        }
+        return redirect()->back()->with('message', 'Food Updated Successfully');
+    }
 
     function orders()
     {
         $data = Order::all();
         return view('admin.order', compact('data'));
     }
-    
+
     function on_the_way($id)
     {
         $data = Order::find($id);
@@ -112,5 +112,21 @@ class AdminController extends Controller
     {
         $data = Book::all();
         return view('admin.reservations', compact('data'));
+    }
+
+    public function users()
+    {
+        $users = User::where('usertype', '!=', 'admin')->get();
+        return view('admin.users', compact('users'));
+    }
+
+    public function delete_user($id)
+    {
+        $user = User::find($id);
+        if ($user) {
+            $user->delete();
+            return redirect()->back()->with('message', 'User deleted successfully.');
+        }
+        return redirect()->back()->with('error', 'User not found.');
     }
 }
