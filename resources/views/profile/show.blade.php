@@ -265,7 +265,7 @@
 </head>
 
 <body>
-    @include('home.header')
+    @include('home.navbar')
 
     {{-- Page Banner --}}
     <div class="page-banner">

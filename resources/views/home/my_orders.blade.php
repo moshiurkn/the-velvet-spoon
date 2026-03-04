@@ -151,8 +151,8 @@
 
 <body>
 
-    {{-- Modern Navbar --}}
-    @include('home.header')
+    {{-- Navbar only (no hero) --}}
+    @include('home.navbar')
 
     {{-- Page Header --}}
     <div class="page-header">
