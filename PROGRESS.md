@@ -61,3 +61,20 @@ This document tracks the implementation progress of the project requirements. Ch
 - [x] UI/UX Responsiveness (Rebuilt entirely using Tailwind CSS).
 - [ ] Manage system security protocols.
 - [ ] Monitor overall application performance.
+
+---
+
+## 💎 Extra Suggested Features (Extensions)
+
+### Enhanced Ordering & Payments
+- [ ] **Order Status Tracking:** Allow Admins to update order status (Pending → Preparing → Out for Delivery).
+- [ ] **User Order History:** Create a customer profile page displaying their past orders and live tracking.
+- [ ] **Online Payments:** Integrate Stripe to process credit card payments securely during checkout.
+
+### Advanced Admin Management
+- [ ] **Dashboard Metrics & Charts:** Add dynamic visual charts (Chart.js/ApexCharts) for Revenue, Total Orders, and Popular Items to the admin dashboard.
+- [ ] **Booking Approval System:** Allow Admins to "Confirm" or "Reject" reservations dynamically.
+- [ ] **Email Notifications:** Trigger automated emails to customers when their booking is confirmed or order is shipped.
+
+### User Interface Polish
+- [ ] **Dynamic Toast Notifications:** Replace basic text alerts with beautiful popup toasts (e.g., SweetAlert) for cart additions, bookings, and logins.
