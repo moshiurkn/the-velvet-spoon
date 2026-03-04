@@ -107,3 +107,78 @@
     </div>
   </div>
 </footer>
+
+<!-- Chart.js Instantiation Scripts -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Parse the PHP aggregated data into JavaScript objects
+    const rawOrderStatuses = @json($order_statuses);
+    const rawPopularFoods = @json($popular_foods);
+
+    // Color palette corresponding to the dark theme
+    const themeColors = ['#e95f71', '#8b2de2', '#d9a927', '#28a745', '#17a2b8'];
+
+    // 1. Order Status Pie Chart
+    if (Object.keys(rawOrderStatuses).length > 0) {
+      const statusCtx = document.getElementById('orderStatusChart').getContext('2d');
+      new Chart(statusCtx, {
+        type: 'doughnut',
+        data: {
+          labels: Object.keys(rawOrderStatuses),
+          datasets: [{
+            data: Object.values(rawOrderStatuses),
+            backgroundColor: themeColors,
+            borderWidth: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: { color: '#8a8d93' }
+            }
+          }
+        }
+      });
+    } else {
+      document.getElementById('orderStatusChart').parentElement.innerHTML += "<p class='text-center mt-4 text-muted'>No orders yet</p>";
+    }
+
+    // 2. Popular Foods Bar Chart
+    if (Object.keys(rawPopularFoods).length > 0) {
+      const foodCtx = document.getElementById('popularFoodChart').getContext('2d');
+      new Chart(foodCtx, {
+        type: 'bar',
+        data: {
+          labels: Object.keys(rawPopularFoods),
+          datasets: [{
+            label: 'Times Ordered',
+            data: Object.values(rawPopularFoods),
+            backgroundColor: '#e95f71', // Velvet red theme
+            borderRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: { color: '#8a8d93', stepSize: 1 },
+              grid: { color: '#333b47' }
+            },
+            x: {
+              ticks: { color: '#8a8d93' },
+              grid: { display: false }
+            }
+          },
+          plugins: {
+            legend: { display: false }
+          }
+        }
+      });
+    } else {
+      document.getElementById('popularFoodChart').parentElement.innerHTML += "<p class='text-center mt-4 text-muted'>No delivered foods yet</p>";
+    }
+  });
+</script>
