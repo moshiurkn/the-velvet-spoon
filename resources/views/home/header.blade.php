@@ -63,6 +63,10 @@
                             class="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-red-50 hover:text-red-600 transition text-sm">
                             <i class="fas fa-user-circle w-4"></i> My Profile
                         </a>
+                        <a href="{{ route('my_orders') }}"
+                            class="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-red-50 hover:text-red-600 transition text-sm">
+                            <i class="fas fa-receipt w-4"></i> My Orders
+                        </a>
                         <a href="{{ url('my_cart') }}"
                             class="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-red-50 hover:text-red-600 transition text-sm">
                             <i class="fas fa-shopping-bag w-4"></i> My Cart

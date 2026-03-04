@@ -28,6 +28,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 
 
+    Route::get('/my_orders', [HomeController::class , 'my_orders'])->name('my_orders');
+
     Route::post('/add_cart/{id}', [HomeController::class , 'add_cart'])->name('add_cart');
 
     Route::get('/my_cart', [HomeController::class , 'my_cart'])->name('my_cart');

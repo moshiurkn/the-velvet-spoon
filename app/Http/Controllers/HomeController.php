@@ -101,6 +101,7 @@ class HomeController extends Controller
         foreach ($cart as $cart) {
             $order = new Order;
 
+            $order->user_id = $userid;
             $order->name = $request->name;
             $order->email = $request->email;
             $order->phone = $request->phone;
@@ -115,11 +116,21 @@ class HomeController extends Controller
             $cart_id = $cart->id;
             $cart_item = Cart::find($cart_id);
             $cart_item->delete();
-
-
         }
         return redirect()->back()->with('message', 'Order Confirmed Successfully');
     }
+
+    public function my_orders()
+    {
+        if (!Auth::id()) {
+            return redirect('login');
+        }
+        $orders = Order::where('user_id', Auth::id())
+            ->latest()
+            ->get();
+        return view('home.my_orders', compact('orders'));
+    }
+
 
     public function add_cart(Request $request, $id)
     {
