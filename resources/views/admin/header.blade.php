@@ -1,22 +1,23 @@
-<header class="header">   
-      <nav class="navbar navbar-expand-lg">
-        <div class="container-fluid d-flex align-items-center justify-content-between">
-          <div class="navbar-header">
-            <!-- Navbar Header--><a href="{{ url('home') }}" class="navbar-brand">
-              <div class="brand-text brand-big visible text-uppercase"><strong class="text-primary" href="{{ url('home') }}">Admin</strong></div>
-              <div class="brand-text brand-sm"><strong class="text-primary">D</strong><strong>A</strong></div></a>
-            <!-- Sidebar Toggle Btn-->
-            <button class="sidebar-toggle"><i class="fa fa-long-arrow-left"></i></button>
-          </div>
-          <div class="right-menu list-inline no-margin-bottom">    
-            <!-- Log out               -->
-            <div class="list-inline-item logout">
-                <form method="POST" action="{{ route('logout') }}" x-data>
-                    @csrf
-                    <input class="btn btn-primary" type="submit" value="logout">
-                </form>
-            </div>
-          </div>
-        </div>
-      </nav>
-    </header>
+<!-- Tailwind Top Header -->
+<header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 z-10 sticky top-0 ml-64">
+  <div class="flex items-center gap-4">
+    <!-- Optional Search Bar placeholder -->
+    <h2 class="text-xl font-semibold text-slate-800 hidden sm:block">Admin Overview</h2>
+  </div>
+
+  <div class="flex items-center gap-6">
+    <a href="{{ url('/') }}" target="_blank"
+      class="text-slate-500 hover:text-red-600 transition text-sm font-medium flex items-center gap-2">
+      <i class="fa fa-globe"></i> View Site
+    </a>
+
+    <!-- Logout Form -->
+    <form method="POST" action="{{ route('logout') }}" class="m-0">
+      @csrf
+      <button type="submit"
+        class="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-sm font-medium transition">
+        <i class="fa fa-sign-out-alt"></i> Logout
+      </button>
+    </form>
+  </div>
+</header>
