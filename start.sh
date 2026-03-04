@@ -15,6 +15,10 @@ php artisan optimize:clear
 # Wait for database connection and run schema migrations if they haven't been run yet
 php artisan migrate --force
 
+# Seed the admin user (safe — only creates if not already exists)
+php artisan db:seed --class=AdminSeeder --force
+
+
 # Start PHP-FPM in background
 php-fpm -D
 
