@@ -16,14 +16,7 @@ RUN apt-get update && apt-get install -y \
     zip \
     unzip \
     nginx \
-    ca-certificates \
-    gnupg \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Install Node.js 20 LTS (via NodeSource for modern Node compatible with Vite 7)
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
-    && apt-get install -y nodejs \
-    && node -v && npm -v
 
 # Install PHP extensions required for Laravel
 RUN docker-php-ext-install pdo_mysql pdo_pgsql mbstring exif pcntl bcmath gd zip
@@ -31,23 +24,14 @@ RUN docker-php-ext-install pdo_mysql pdo_pgsql mbstring exif pcntl bcmath gd zip
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copy composer files first (for caching)
+# Copy composer files first for layer caching
 COPY composer.json composer.lock ./
 
-# Install PHP dependencies (no scripts yet so autoloader doesn't fail on missing code)
+# Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader --no-scripts
 
-# Copy package files for npm caching
-COPY package.json package-lock.json ./
-
-# Install Node dependencies
-RUN npm ci
-
-# Copy the rest of the application code
+# Copy the rest of the application code (includes pre-built public/build assets)
 COPY . .
-
-# Build frontend assets with Vite
-RUN npm run build
 
 # Run composer scripts now that all code is present
 RUN composer dump-autoload --optimize
