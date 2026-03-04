@@ -24,33 +24,63 @@
                 <a href="#contact"
                     class="text-slate-600 hover:text-red-600 font-medium transition duration-200">Contact</a>
 
-                @auth
-                <a href="{{ route('profile.show') }}"
-                    class="text-slate-600 hover:text-red-600 font-medium transition duration-200">Profile</a>
-                @endauth
             </div>
 
             <!-- Auth/Cart Buttons -->
             <div class="hidden lg:flex items-center space-x-4">
                 @if (Route::has('login'))
                 @auth
+                {{-- Cart Icon --}}
                 <a href="{{ url('my_cart') }}"
                     class="relative text-slate-700 hover:text-red-600 transition duration-200">
                     <i class="fas fa-shopping-cart text-xl"></i>
-                    @php
-                    $cartCount = \App\Http\Controllers\HomeController::getCartCount();
-                    @endphp
+                    @php $cartCount = \App\Http\Controllers\HomeController::getCartCount(); @endphp
                     @if($cartCount > 0)
                     <span
                         class="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">{{
                         $cartCount }}</span>
                     @endif
                 </a>
-                <form action="{{ route('logout') }}" method="POST" class="inline">
-                    @csrf
-                    <button type="submit"
-                        class="bg-slate-800 hover:bg-slate-700 text-white px-5 py-2 rounded-full font-medium transition duration-300 shadow-md">Logout</button>
-                </form>
+                {{-- User Dropdown --}}
+                <div class="relative" x-data="{ userOpen: false }">
+                    <button @click="userOpen = !userOpen" @click.away="userOpen = false"
+                        class="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-full font-medium transition duration-300 shadow-md">
+                        <div class="w-7 h-7 bg-red-600 rounded-full flex items-center justify-center text-sm font-bold">
+                            {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                        </div>
+                        <span class="max-w-[100px] truncate text-sm">{{ Auth::user()->name }}</span>
+                        <i class="fas fa-chevron-down text-xs text-slate-400 transition-transform"
+                            :class="userOpen ? 'rotate-180' : ''"></i>
+                    </button>
+                    <div x-show="userOpen" x-transition
+                        class="absolute right-0 mt-2 w-52 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden z-50"
+                        style="display:none;">
+                        <div class="px-4 py-3 border-b border-gray-100">
+                            <p class="text-xs text-gray-400">Signed in as</p>
+                            <p class="text-sm font-semibold text-slate-800 truncate">{{ Auth::user()->email }}</p>
+                        </div>
+                        <a href="{{ route('profile.show') }}"
+                            class="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-red-50 hover:text-red-600 transition text-sm">
+                            <i class="fas fa-user-circle w-4"></i> My Profile
+                        </a>
+                        <a href="{{ url('my_cart') }}"
+                            class="flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-red-50 hover:text-red-600 transition text-sm">
+                            <i class="fas fa-shopping-bag w-4"></i> My Cart
+                            @if($cartCount > 0)<span
+                                class="ml-auto bg-red-600 text-white text-xs px-2 py-0.5 rounded-full">{{ $cartCount
+                                }}</span>@endif
+                        </a>
+                        <div class="border-t border-gray-100">
+                            <form action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button type="submit"
+                                    class="w-full flex items-center gap-3 px-4 py-3 text-slate-700 hover:bg-red-50 hover:text-red-600 transition text-sm">
+                                    <i class="fas fa-sign-out-alt w-4"></i> Logout
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
                 @else
                 <a href="{{ route('login') }}"
                     class="text-slate-600 hover:text-red-600 font-medium transition duration-200">Login</a>

@@ -8,90 +8,155 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap"
         rel="stylesheet">
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
+            background: #0f172a;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
         }
 
-        .font-display {
-            font-family: 'Cormorant Garamond', serif;
+        .heading {
+            font-family: 'Playfair Display', serif;
         }
 
-        .auth-bg {
-            background: linear-gradient(135deg, #0f0f0f 0%, #1a1208 50%, #0f0f0f 100%);
+        /* Background grid texture */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(220, 38, 38, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(220, 38, 38, 0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
         }
 
-        .gold {
-            color: #c9a84c;
+        /* Red glow top-left */
+        body::after {
+            content: '';
+            position: fixed;
+            top: -150px;
+            left: -150px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(220, 38, 38, 0.12) 0%, transparent 70%);
+            pointer-events: none;
         }
 
-        .gold-border {
-            border-color: #c9a84c;
+        .auth-card {
+            width: 100%;
+            max-width: 440px;
+            position: relative;
+            z-index: 10;
         }
 
-        .gold-bg {
-            background-color: #c9a84c;
+        .brand-link {
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            width: 48px;
+            height: 48px;
+            background: #dc2626;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 18px;
+            color: white;
+            box-shadow: 0 0 20px rgba(220, 38, 38, 0.4);
+        }
+
+        .brand-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #f1f5f9;
+        }
+
+        .card {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(220, 38, 38, 0.2);
+            border-radius: 16px;
+            padding: 2.25rem;
+            margin-top: 1.5rem;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.02);
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #94a3b8;
+            margin-bottom: 0.4rem;
         }
 
         .form-input {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(201, 168, 76, 0.25);
-            color: #e8dcc8;
             width: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(100, 116, 139, 0.3);
+            color: #e2e8f0;
             padding: 0.75rem 1rem;
-            border-radius: 6px;
-            font-size: 0.875rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
             transition: all 0.2s;
             outline: none;
         }
 
         .form-input::placeholder {
-            color: rgba(232, 220, 200, 0.35);
+            color: #475569;
         }
 
         .form-input:focus {
-            border-color: rgba(201, 168, 76, 0.7);
-            background: rgba(255, 255, 255, 0.07);
-            box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.1);
+            border-color: #dc2626;
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+            background: rgba(15, 23, 42, 0.8);
         }
 
-        .form-label {
-            display: block;
-            font-size: 0.75rem;
-            font-weight: 500;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: rgba(201, 168, 76, 0.7);
-            margin-bottom: 0.4rem;
-        }
-
-        .btn-gold {
+        .btn-primary {
             width: 100%;
-            background: linear-gradient(135deg, #c9a84c, #a8873a);
-            color: #0f0f0f;
+            background: #dc2626;
+            color: white;
             font-weight: 600;
-            font-size: 0.8rem;
-            letter-spacing: 0.14em;
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
             padding: 0.875rem;
-            border-radius: 6px;
+            border-radius: 8px;
             border: none;
             cursor: pointer;
             transition: all 0.25s;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
         }
 
-        .btn-gold:hover {
-            background: linear-gradient(135deg, #dbb95c, #c9a84c);
+        .btn-primary:hover {
+            background: #b91c1c;
             transform: translateY(-1px);
-            box-shadow: 0 8px 20px rgba(201, 168, 76, 0.3);
+            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4);
         }
 
         .divider {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.75rem;
             margin: 1.5rem 0;
         }
 
@@ -100,83 +165,94 @@
             content: '';
             flex: 1;
             height: 1px;
-            background: rgba(201, 168, 76, 0.2);
+            background: rgba(100, 116, 139, 0.3);
         }
 
-        .error-list {
+        .divider span {
+            font-size: 0.7rem;
+            color: #475569;
+            white-space: nowrap;
+            letter-spacing: 0.05em;
+        }
+
+        .error-box {
             background: rgba(239, 68, 68, 0.1);
             border: 1px solid rgba(239, 68, 68, 0.3);
-            border-radius: 6px;
+            border-radius: 8px;
             padding: 0.75rem 1rem;
             margin-bottom: 1.25rem;
         }
 
-        .error-list li {
+        .error-box li {
             color: #fca5a5;
             font-size: 0.8rem;
             list-style: disc;
             margin-left: 1rem;
         }
+
+        .success-box {
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .success-box p {
+            color: #86efac;
+            font-size: 0.8rem;
+        }
+
+        a.text-link {
+            color: #dc2626;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+
+        a.text-link:hover {
+            color: #f87171;
+        }
     </style>
 </head>
 
-<body class="auth-bg min-h-screen flex items-center justify-center p-4">
-
-    {{-- Ambient background orbs --}}
-    <div class="fixed inset-0 overflow-hidden pointer-events-none">
-        <div
-            style="position:absolute;top:20%;left:15%;width:400px;height:400px;background:radial-gradient(circle,rgba(201,168,76,0.06) 0%,transparent 70%);border-radius:50%;">
-        </div>
-        <div
-            style="position:absolute;bottom:20%;right:15%;width:300px;height:300px;background:radial-gradient(circle,rgba(201,168,76,0.04) 0%,transparent 70%);border-radius:50%;">
-        </div>
-    </div>
-
-    <div style="width:100%;max-width:440px;position:relative;z-index:10;">
-
-        {{-- Logo / Branding --}}
-        <div class="text-center mb-8">
-            <a href="{{ url('/') }}" class="inline-block">
-                <div class="font-display text-4xl gold" style="letter-spacing:0.08em;">The Velvet Spoon</div>
-                <div
-                    style="font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;color:rgba(201,168,76,0.5);margin-top:2px;">
-                    Fine Dining</div>
+<body>
+    <div class="auth-card">
+        {{-- Brand Header --}}
+        <div style="text-align:center; margin-bottom: 0.25rem;">
+            <a href="{{ url('/') }}" class="brand-link" style="justify-content:center;">
+                <div class="brand-logo">VS</div>
+                <span class="brand-name">The Velvet Spoon</span>
             </a>
+            <p style="font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:#475569;margin-top:0.5rem;">
+                Fine Dining Experience</p>
         </div>
 
         {{-- Card --}}
-        <div
-            style="background:rgba(15,15,15,0.8);backdrop-filter:blur(20px);border:1px solid rgba(201,168,76,0.15);border-radius:12px;padding:2.5rem;">
+        <div class="card">
+            <h1 class="heading" style="font-size:1.75rem;font-weight:700;color:#f1f5f9;margin-bottom:0.2rem;">Welcome
+                Back</h1>
+            <p style="font-size:0.82rem;color:#64748b;margin-bottom:1.5rem;">Sign in to continue your dining experience
+            </p>
 
-            <h1 class="font-display text-white"
-                style="font-size:1.8rem;font-weight:300;letter-spacing:0.04em;margin-bottom:0.25rem;">Welcome Back</h1>
-            <p style="font-size:0.8rem;color:rgba(232,220,200,0.45);margin-bottom:1.75rem;">Sign in to continue your
-                dining experience</p>
-
-            {{-- Validation Errors --}}
             @if ($errors->any())
-            <ul class="error-list">
-                @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-                @endforeach
+            <ul class="error-box">
+                @foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach
             </ul>
             @endif
-
-            {{-- Session Status --}}
             @if (session('status'))
-            <div
-                style="background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);border-radius:6px;padding:0.75rem 1rem;margin-bottom:1.25rem;">
-                <p style="color:#86efac;font-size:0.8rem;">{{ session('status') }}</p>
+            <div class="success-box">
+                <p>{{ session('status') }}</p>
             </div>
             @endif
 
             <form method="POST" action="{{ route('login') }}">
                 @csrf
 
-                <div style="margin-bottom:1.25rem;">
+                <div style="margin-bottom:1.1rem;">
                     <label class="form-label" for="email">Email Address</label>
                     <input id="email" class="form-input" type="email" name="email" value="{{ old('email') }}" required
-                        autofocus placeholder="you@example.com">
+                        autofocus placeholder="rahim@example.com">
                 </div>
 
                 <div style="margin-bottom:1rem;">
@@ -185,44 +261,31 @@
                         placeholder="••••••••">
                 </div>
 
-                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.75rem;">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;">
                     <label style="display:flex;align-items:center;gap:0.5rem;cursor:pointer;">
                         <input type="checkbox" name="remember" id="remember_me"
-                            style="accent-color:#c9a84c;width:14px;height:14px;">
-                        <span style="font-size:0.8rem;color:rgba(232,220,200,0.5);">Remember me</span>
+                            style="accent-color:#dc2626;width:14px;height:14px;">
+                        <span style="font-size:0.8rem;color:#64748b;">Remember me</span>
                     </label>
                     @if (Route::has('password.request'))
-                    <a href="{{ route('password.request') }}"
-                        style="font-size:0.8rem;color:rgba(201,168,76,0.7);text-decoration:none;"
-                        onmouseover="this.style.color='#c9a84c'"
-                        onmouseout="this.style.color='rgba(201,168,76,0.7)'">Forgot password?</a>
+                    <a href="{{ route('password.request') }}" class="text-link" style="font-size:0.8rem;">Forgot
+                        password?</a>
                     @endif
                 </div>
 
-                <button type="submit" class="btn-gold">Sign In</button>
+                <button type="submit" class="btn-primary">Sign In</button>
 
-                <div class="divider">
-                    <span
-                        style="font-size:0.7rem;color:rgba(232,220,200,0.3);letter-spacing:0.06em;white-space:nowrap;">New
-                        to The Velvet Spoon?</span>
-                </div>
+                <div class="divider"><span>New to The Velvet Spoon?</span></div>
 
-                <div class="text-center">
-                    <a href="{{ route('register') }}"
-                        style="font-size:0.85rem;color:rgba(201,168,76,0.8);text-decoration:none;letter-spacing:0.03em;"
-                        onmouseover="this.style.color='#c9a84c'" onmouseout="this.style.color='rgba(201,168,76,0.8)'">
-                        Create an Account →
-                    </a>
+                <div style="text-align:center;">
+                    <a href="{{ route('register') }}" class="text-link">Create an Account →</a>
                 </div>
             </form>
         </div>
 
-        {{-- Footer --}}
-        <p class="text-center" style="font-size:0.7rem;color:rgba(232,220,200,0.2);margin-top:1.5rem;">
-            &copy; {{ date('Y') }} The Velvet Spoon. All rights reserved.
-        </p>
+        <p style="text-align:center;font-size:0.7rem;color:#1e293b;margin-top:1.25rem;">&copy; {{ date('Y') }} The
+            Velvet Spoon. All rights reserved.</p>
     </div>
-
 </body>
 
 </html>
