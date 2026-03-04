@@ -1,7 +1,7 @@
 @include('home.navbar')
 
 {{-- Hero Section --}}
-<header id="home" class="relative pt-32 pb-12 lg:pt-48 lg:pb-16 overflow-hidden bg-slate-900">
+<header id="home" class="relative pt-32 pb-28 lg:pt-48 lg:pb-32 overflow-hidden bg-slate-900">
     <div class="absolute inset-0 opacity-40 mix-blend-multiply">
         <img src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=2000&auto=format&fit=crop"
             alt="Restaurant Interior" class="w-full h-full object-cover" />
