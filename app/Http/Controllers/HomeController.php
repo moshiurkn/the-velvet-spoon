@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Carbon\Doctrine\CarbonDoctrineType;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -16,48 +17,68 @@ class HomeController extends Controller
 {
     public function index()
     {
-        if (auth::id())
-        {
+        if (auth::id()) {
             $usertype = Auth::user()->usertype;
 
-            if ($usertype == 'user')
-            {
-                $data = Food::all(); 
+            if ($usertype == 'user') {
+                $data = Food::all();
                 return view('home.index', compact('data'));
             }
-            else
-            {
+            else {
                 $total_user = User::where('usertype', '=', 'user')->count();
                 $total_food = Food::count();
                 $total_order = Order::count();
                 $total_deliverd = Order::where('delivery_status', '=', 'delivered')->count();
-                
-                return view('admin.index', compact('total_user', 'total_food', 'total_order', 'total_deliverd'));
-               
+
+                // Calculate Total Revenue (convert '$20' or '20' into pure number and sum)
+                $delivered_orders = Order::where('delivery_status', '=', 'delivered')->get();
+                $total_revenue = 0;
+                foreach ($delivered_orders as $order) {
+                    $cleaned_price = (float)filter_var($order->price, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+                    $total_revenue += $cleaned_price;
+                }
+
+                // Data for Pie Chart: Orders by Status
+                $order_statuses = Order::select('delivery_status', \Illuminate\Support\Facades\DB::raw('count(*) as total'))
+                    ->groupBy('delivery_status')
+                    ->pluck('total', 'delivery_status')
+                    ->toArray();
+
+                // Data for Bar Chart: Top 5 Popular Foods (from delivered orders)
+                $popular_foods = Order::where('delivery_status', '=', 'delivered')
+                    ->select('titile', \Illuminate\Support\Facades\DB::raw('count(*) as count'))
+                    ->groupBy('titile')
+                    ->orderByDesc('count')
+                    ->take(5)
+                    ->pluck('count', 'titile')
+                    ->toArray();
+
+                return view('admin.index', compact(
+                    'total_user', 'total_food', 'total_order', 'total_deliverd',
+                    'total_revenue', 'order_statuses', 'popular_foods'
+                ));
             }
         }
-    
+
     }
 
     public function Home()
     {
         $data = Food::all();
         return view('home.index', compact('data'));
-       
+
     }
 
     public function my_cart()
     {
-        if (Auth::id())
-        {
+        if (Auth::id()) {
             $user_id = Auth::user()->id;
 
             $data = Cart::where('user_id', $user_id)->get();
 
             return view('home.my_cart', compact('data'));
         }
-        else
-        {
+        else {
             return redirect('login');
         }
     }
@@ -74,11 +95,10 @@ class HomeController extends Controller
     public function confirm_order(Request $request)
     {
         $userid = Auth()->user()->id;
-        
-        $cart = Cart::where('user_id', '=',$userid)->get();
 
-        foreach ($cart as $cart)
-        {
+        $cart = Cart::where('user_id', '=', $userid)->get();
+
+        foreach ($cart as $cart) {
             $order = new Order;
 
             $order->name = $request->name;
@@ -103,15 +123,14 @@ class HomeController extends Controller
 
     public function add_cart(Request $request, $id)
     {
-        if (Auth::id())
-        {
+        if (Auth::id()) {
             $food = Food::find($id);
 
             $cart_titile = $food->titile;
 
             $cart_detail = $food->detail;
 
-            $cart_price = Str::remove('Taka',$food->price);
+            $cart_price = Str::remove('Taka', $food->price);
 
             $cart_image = $food->image;
 
@@ -133,11 +152,10 @@ class HomeController extends Controller
 
             return redirect()->back();
 
-            
+
         }
-        else
-        {
-            
+        else {
+
             return redirect('login');
 
         }
